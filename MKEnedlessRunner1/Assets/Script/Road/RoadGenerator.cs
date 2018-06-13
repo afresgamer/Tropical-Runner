@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class RoadGenerator : SingletonMonoBehaviour<RoadGenerator> {
@@ -12,11 +11,15 @@ public class RoadGenerator : SingletonMonoBehaviour<RoadGenerator> {
 
     private void Start()
     {
-        GameObject FirstRoad = FindObjectOfType<Road>().gameObject;
-        roadList.Add(FirstRoad);
+        GameObject firstRoad = FindObjectOfType<Road>().gameObject;
+        roadList.Add(firstRoad);
     }
 
-    //道生成処理
+    /// <summary>
+    /// 道生成処理
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="num"></param>
     public void RoadCreate(Vector3 pos, int num)
     {
         GameObject road = Instantiate(SetRoad(num), pos, Quaternion.identity);
@@ -28,10 +31,13 @@ public class RoadGenerator : SingletonMonoBehaviour<RoadGenerator> {
         }
     }
 
-    //ランダム道生成処理
+    /// <summary>
+    /// ランダム道生成処理
+    /// </summary>
+    /// <param name="pos"></param>
     public void RandomRoadCreate(Vector3 pos)
     {
-        GameObject road = Instantiate(SetRandomRoad(),pos,Quaternion.identity);
+        GameObject road = Instantiate(SetRandomRoad(), pos, Quaternion.identity);
         roadList.Add(road);
         if (roadList.Count > RoadLength)
         {
@@ -40,14 +46,21 @@ public class RoadGenerator : SingletonMonoBehaviour<RoadGenerator> {
         }
     }
 
-    //ランダム道決定関数(Hard)
+    /// <summary>
+    /// ランダム道決定関数(Hard)
+    /// </summary>
+    /// <returns></returns>
     public GameObject SetRandomRoad()
     {
         int randomNum = Random.Range(0, roadType.RoadTypes.Length);
         return roadType.RoadTypes[randomNum];
     }
 
-    //道決定関数
+    /// <summary>
+    /// 道決定関数
+    /// </summary>
+    /// <param name="num"></param>
+    /// <returns></returns>
     public GameObject SetRoad(int num)
     {
         return roadType.RoadTypes[num];

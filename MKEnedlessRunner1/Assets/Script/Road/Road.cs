@@ -11,6 +11,7 @@ public class Road : MonoBehaviour {
     {
         if (other.gameObject.tag == "Player")
         {
+            //Debug.Log("Player next road Create");
             RoadGenerator.Instance.RandomRoadCreate(SetRoadPos().position);
         }
     }

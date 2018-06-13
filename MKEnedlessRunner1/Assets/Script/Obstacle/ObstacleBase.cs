@@ -9,8 +9,5 @@ public class ObstacleBase : MonoBehaviour {
         transform.Rotate(Vector3.forward, SpinSpeed * Time.deltaTime);
     }
 
-    public virtual void OnCollisionEnter(Collision collision)
-    {
-        
-    }
+    public virtual void OnCollisionEnter(Collision collision){}
 }

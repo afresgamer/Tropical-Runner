@@ -11,12 +11,13 @@ public class ObstacleGenerator : MonoBehaviour {
     //幅と奥行き
     public float width = 2;
     public float height = 10;
-    //回転軸
-    public Quaternion quaternion;
+    //回転軸と位置
+    Quaternion quaternion;
+    float CreateHeight;
 
     Vector3 RandomPos()
     {
-        Vector3 pos = new Vector3(Random.Range(-width, width), 0.5f, Random.Range(-height, height));
+        Vector3 pos = new Vector3(Random.Range(-width, width), CreateHeight, Random.Range(-height, height));
         return transform.position + pos;
     }
 
@@ -24,6 +25,7 @@ public class ObstacleGenerator : MonoBehaviour {
     {
         int num = Random.Range(0, ObstableS.Length);
         quaternion = ObstableS[num].transform.rotation;
+        CreateHeight = ObstableS[num].transform.position.y;
         return ObstableS[num];
     }
 
@@ -33,4 +35,10 @@ public class ObstacleGenerator : MonoBehaviour {
             Instantiate(RandomItem(), RandomPos(), quaternion);
         }
 	}
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position, new Vector3(width * 2, 0, height * 2));
+    }
 }

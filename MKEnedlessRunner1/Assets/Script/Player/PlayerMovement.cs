@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class Player : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour {
 
     public enum AnimState { Idle,Run,Jump }
     private AnimState animState;
@@ -24,43 +24,33 @@ public class Player : MonoBehaviour {
         {AnimState.Jump, Animator.StringToHash("JUMP")}
     };
 
-    //Hp
-    private int hp = 3;
-    public int Hp { get { return hp; } set { hp = value; } }
-    //Item Point
-    private int itemScorePoint = 0;
-    public int ItemScorePoint { get { return itemScorePoint; }
-        set { if(value > 0)itemScorePoint = value; }
-    }
-    //Distance
-    private Vector3 StartPos;
-    private Vector3 NowPos;
-    private float distance = 0;
-    public float Distance { get { return distance; } }
-
     Animator anim;
     Rigidbody rb;
     //Damage Event 
     Material[] materials;
     
 	void Start () {
+        Camera.main.GetComponent<PlayerCamera>().enabled = true;
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         materials = GetComponentInChildren<Renderer>().materials;
-        //StartPos = transform.position;
-	}
+        PlayerStatus.Instance.StartPos = transform.position;
+    }
 	
 	void Update () {
-        //NowPos = transform.position;
-        //distance = Vector3.Distance(NowPos, StartPos);
-        if(isMove) Move();
+        // 距離測定
+        PlayerStatus.Instance.NowPos = transform.position;
+        float f_distance = Vector3.Distance(PlayerStatus.Instance.NowPos, PlayerStatus.Instance.StartPos);
+        PlayerStatus.Instance.Distance = (int)f_distance;
+        //　移動
+        if (isMove) Move();
 	}
 
-    public void Move()
+    private void Move()
     {
         float h = Input.GetAxis("Horizontal");
         //Acceleration
-        bool isAcceleration = Input.GetKey(KeyCode.W);
+        bool isAcceleration = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
 
         Vector3 move = transform.forward * move_speed * 100 * Time.deltaTime + 
             transform.right * h * rot_Speed * 100 * Time.deltaTime;
@@ -84,11 +74,11 @@ public class Player : MonoBehaviour {
     public void Damage()
     {
         isMove = false;
-        if (hp > 0) { hp--; StartCoroutine(DamageEffect()); }
-        else { Death(); }
+        if (PlayerStatus.Instance.Hp > 0) { PlayerStatus.Instance.Hp--; StartCoroutine(DamageEffect()); }
+        if(PlayerStatus.Instance.Hp == 0) { Death(); }
     }
     
-    IEnumerator DamageEffect()
+    private IEnumerator DamageEffect()
     {
         yield return new WaitForSeconds(0.2f);
         for (int i = 0; i < materials.Length; i++)
@@ -103,8 +93,11 @@ public class Player : MonoBehaviour {
         isMove = true;
     }
 
-    void Death()
+    private void Death()
     {
         isMove = false;
+        Camera.main.GetComponent<PlayerCamera>().enabled = false;
+        Destroy(gameObject);
+        SceneController.Instance.ChangeScene("Result");
     }
 }

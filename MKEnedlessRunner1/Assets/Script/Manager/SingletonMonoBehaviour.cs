@@ -1,18 +1,20 @@
 ﻿using UnityEngine;
 
-public class SingletonMonoBehaviour<T> : MonoBehaviour where T :MonoBehaviour {
+public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour {
 
     public static T Instance;
-	
-    //処理を軽くするためゲッターは省略
-    public void Awake()
+    
+    virtual protected void Awake()
     {
-        if(Instance != null)
+        if(Instance == null)
         {
-            Destroy(this);
+            Instance = (T)FindObjectOfType(typeof(T));
+            DontDestroyOnLoad(gameObject);
         }
-        else { Instance = (T)FindObjectOfType(typeof(T)); }
-
-        DontDestroyOnLoad(gameObject);
+        else
+        {
+            Destroy(gameObject);
+        }
     }
+    
 }

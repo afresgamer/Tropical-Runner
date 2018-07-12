@@ -12,7 +12,7 @@ public class Item : ObstacleBase {
         if(collision.gameObject.tag == "Player")
         {
             Destroy(gameObject);
-            collision.gameObject.GetComponent<Player>().ItemScorePoint++;
+            PlayerStatus.Instance.ItemScorePoint++;
         }
     }
     

@@ -9,8 +9,8 @@ public class Obstacle : ObstacleBase {
         if(collision.gameObject.tag == "Player")
         {
             Destroy(gameObject);
-            collision.gameObject.GetComponent<Player>().ItemScorePoint--;
-            collision.gameObject.GetComponent<Player>().Damage();
+            PlayerStatus.Instance.ItemScorePoint--;
+            collision.gameObject.GetComponent<PlayerMovement>().Damage();
         }
     }
 }

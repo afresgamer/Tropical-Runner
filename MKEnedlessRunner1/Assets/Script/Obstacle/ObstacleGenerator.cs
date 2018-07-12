@@ -29,10 +29,18 @@ public class ObstacleGenerator : MonoBehaviour {
         return ObstableS[num];
     }
 
+    GameObject RandomItem(int num)
+    {
+        quaternion = ObstableS[num].transform.rotation;
+        CreateHeight = ObstableS[num].transform.position.y;
+        return ObstableS[num];
+    }
+
 	void Start () {
 		for(int i = 0; i < ItemNum; i++)
         {
-            Instantiate(RandomItem(), RandomPos(), quaternion);
+            GameObject item = Instantiate(RandomItem(), RandomPos(), quaternion);
+            item.transform.SetParent(transform.parent);
         }
 	}
 

@@ -329,14 +329,17 @@
     <Compile Include="Assets\Script\Obstacle\Obstacle.cs" />
     <Compile Include="Assets\Script\Obstacle\ObstacleBase.cs" />
     <Compile Include="Assets\Script\Obstacle\ObstacleGenerator.cs" />
-    <Compile Include="Assets\Script\Player\Player.cs" />
     <Compile Include="Assets\Script\Player\PlayerCamera.cs" />
+    <Compile Include="Assets\Script\Player\PlayerMovement.cs" />
+    <Compile Include="Assets\Script\Player\PlayerStatus.cs" />
     <Compile Include="Assets\Script\Road\Road.cs" />
     <Compile Include="Assets\Script\Road\RoadGenerator.cs" />
     <Compile Include="Assets\Script\Road\RoadType.cs" />
-    <Compile Include="Assets\Script\UI\DistanceScore.cs" />
+    <Compile Include="Assets\Script\UI\BackgroundScrolling.cs" />
     <Compile Include="Assets\Script\UI\HiScore.cs" />
+    <Compile Include="Assets\Script\UI\Result.cs" />
     <Compile Include="Assets\Script\UI\ScoreController.cs" />
+    <Compile Include="Assets\Script\UI\Title.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Demigiant\DOTween\DOTween.XML" />

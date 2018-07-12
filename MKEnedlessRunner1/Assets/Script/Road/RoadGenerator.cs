@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class RoadGenerator : SingletonMonoBehaviour<RoadGenerator> {
+public class RoadGenerator : MonoBehaviour {
     //道のタイプ
     public RoadType roadType;
     //道生成数管理リスト

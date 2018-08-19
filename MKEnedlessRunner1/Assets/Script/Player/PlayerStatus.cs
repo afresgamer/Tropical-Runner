@@ -12,13 +12,27 @@ public class PlayerStatus : SingletonMonoBehaviour<PlayerStatus> {
         get { return itemScorePoint; }
         set { if (value > 0) itemScorePoint = value; }
     }
-    //Distance
+    // Distance
     [HideInInspector]
     public Vector3 StartPos = Vector3.zero;
     [HideInInspector]
     public Vector3 NowPos = Vector3.zero;
     private int distance = 0;
     public int Distance { get { return distance; } set { distance = value; } }
+    // Score
+    private int score = 0;
+    public int Score
+    {
+        get { return score; }
+        set { score = (ItemScorePoint * 10) + Distance; }
+    }
+    //HiScore
+    private int hiscore = 0;
+    public int HiScore
+    {
+        get { return hiscore; }
+        set { hiscore = value; }
+    }
 
     public void Init()
     {
@@ -28,6 +42,7 @@ public class PlayerStatus : SingletonMonoBehaviour<PlayerStatus> {
         NowPos = Vector3.zero;
         Distance = 0;
         Time.timeScale = 1;
+        score = 0;
     }
 
 }

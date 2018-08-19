@@ -4,13 +4,14 @@ public class Obstacle : ObstacleBase {
     
     public override void Update(){}
 
-    public override void OnCollisionEnter(Collision collision)
+    public override void OnTriggerEnter(Collider other)
     {
-        if(collision.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             Destroy(gameObject);
             PlayerStatus.Instance.ItemScorePoint--;
-            collision.gameObject.GetComponent<PlayerMovement>().Damage();
+            other.gameObject.GetComponent<PlayerMovement>().Damage();
         }
     }
+    
 }

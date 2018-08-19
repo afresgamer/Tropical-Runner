@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
@@ -15,6 +13,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public void SetGameDifficulty(GameDifficulty gameDifficulty)
     {
         NowGameDifficulty = gameDifficulty;
+    }
+
+    public void SetGameDifficulty(string gameDiffName)
+    {
+        NowGameDifficulty = (GameDifficulty)Enum.Parse(typeof(GameDifficulty),gameDiffName);
     }
 
 }

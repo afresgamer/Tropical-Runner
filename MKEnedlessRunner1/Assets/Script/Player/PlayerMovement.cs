@@ -14,27 +14,30 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField, Header("プレイヤーのジャンプ力")]
     private float JumpPower = 10;
     [SerializeField, Header("プレイヤーのダメージエフェクト間隔")]
-    public float FadeSpeed = 0.1f;
-    bool isMove = true;
+    private float FadeSpeed = 0.1f;
+    [SerializeField, Header("プレイヤーの加速力")]
+    private float SpeedUpValue = 1.5f;
+    bool isMove = false;
 
     static Dictionary<AnimState, int> animDict = new Dictionary<AnimState, int>()
     {
         {AnimState.Idle ,Animator.StringToHash("Idle")},
         {AnimState.Run, Animator.StringToHash("Run")},
-        {AnimState.Jump, Animator.StringToHash("JUMP")}
+        {AnimState.Jump, Animator.StringToHash("Jump")}
     };
 
     Animator anim;
-    Rigidbody rb;
+    CharacterController cCtrl;
     //Damage Event 
     Material[] materials;
     
 	void Start () {
         Camera.main.GetComponent<PlayerCamera>().enabled = true;
         anim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
+        cCtrl = GetComponent<CharacterController>();
         materials = GetComponentInChildren<Renderer>().materials;
         PlayerStatus.Instance.StartPos = transform.position;
+        StartCoroutine(StartBetween());
     }
 	
 	void Update () {
@@ -44,28 +47,24 @@ public class PlayerMovement : MonoBehaviour {
         PlayerStatus.Instance.Distance = (int)f_distance;
         //　移動
         if (isMove) Move();
-	}
+    }
 
     private void Move()
     {
         float h = Input.GetAxis("Horizontal");
         //Acceleration
-        bool isAcceleration = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
+        bool isAcceleration = Input.GetKey(KeyCode.U) || Input.GetKey(KeyCode.UpArrow);
 
         Vector3 move = transform.forward * move_speed * 100 * Time.deltaTime + 
             transform.right * h * rot_Speed * 100 * Time.deltaTime;
-        rb.velocity = move;
-        rb.rotation = Quaternion.Euler(0, h * 30, 0);
+        if (isAcceleration) { cCtrl.SimpleMove(move * SpeedUpValue); }
+        cCtrl.SimpleMove(move);
+        transform.rotation = Quaternion.Euler(0, h * 30, 0);
         
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            anim.SetTrigger(animDict[AnimState.Jump]);
-            rb.AddForce(Vector3.up * 100 * JumpPower);
-        }
-        if (isAcceleration) { rb.velocity *= 2; }
+        if (Input.GetKeyDown(KeyCode.Space) && cCtrl.isGrounded) { cCtrl.Move(Vector3.up * JumpPower); }
 
-        Physics.gravity = new Vector3(0, -20, 0);
-        anim.SetBool(animDict[AnimState.Run], rb.velocity != Vector3.zero);
+        anim.SetBool(animDict[AnimState.Jump], !cCtrl.isGrounded);
+        anim.SetBool(animDict[AnimState.Run], cCtrl.velocity != Vector3.zero);
     }
     
     /// <summary>
@@ -76,6 +75,12 @@ public class PlayerMovement : MonoBehaviour {
         isMove = false;
         if (PlayerStatus.Instance.Hp > 0) { PlayerStatus.Instance.Hp--; StartCoroutine(DamageEffect()); }
         if(PlayerStatus.Instance.Hp == 0) { Death(); }
+    }
+
+    private IEnumerator StartBetween()
+    {
+        yield return new WaitForSeconds(0.3f);
+        isMove = true;
     }
     
     private IEnumerator DamageEffect()
@@ -99,5 +104,17 @@ public class PlayerMovement : MonoBehaviour {
         Camera.main.GetComponent<PlayerCamera>().enabled = false;
         Destroy(gameObject);
         SceneController.Instance.ChangeScene("Result");
+    }
+
+    /// <summary>
+    /// 海面に落ちたら即死処理
+    /// </summary>
+    /// <param name="hit"></param>
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(hit.gameObject.tag == "Wave")
+        {
+            Death();
+        }
     }
 }

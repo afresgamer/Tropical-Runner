@@ -5,14 +5,18 @@ using DG.Tweening;
 
 public class Result : MonoBehaviour {
     
-    [SerializeField, Header("得点テキスト")]
-    private Text ScoreText;
+    [SerializeField, Header("アイテム獲得数テキスト")]
+    private Text ItemPointText;
     [SerializeField, Header("距離テキスト")]
     private Text DistanceText;
+    [SerializeField, Header("総合得点テキスト")]
+    private Text ScoreText;
     [SerializeField, Header("リプレイ用のボタン")]
     private Button ReplayButton;
     [SerializeField, Header("タイトルに戻るボタン")]
     private Button TotitleButton;
+    [SerializeField, Header("ランキングを作成するボタン")]
+    private Button RankingCreateButton;
 
     private void Start()
     {
@@ -22,13 +26,17 @@ public class Result : MonoBehaviour {
 
     public IEnumerator ResultAnimation()
     {
-        ScoreText.DOFade(1, 5.0f);
-        ScoreText.rectTransform.parent.GetComponent<Text>().DOFade(1, 5.0f);
+        ItemPointText.DOFade(1, 5.0f);
+        ItemPointText.rectTransform.parent.GetComponent<Text>().DOFade(1, 5.0f);
         DistanceText.DOFade(1, 5.0f);
         DistanceText.rectTransform.parent.GetComponent<Text>().DOFade(1, 5.0f);
+        yield return new WaitForSeconds(2.5f);
+        ScoreText.DOFade(1, 5.0f);
+        ScoreText.rectTransform.parent.GetComponent<Text>().DOFade(1, 5.0f);
         yield return new WaitForSeconds(5.0f);
         ReplayButton.enabled = true;
         TotitleButton.enabled = true;
+        RankingCreateButton.enabled = true;
     }
 
     /// <summary>
@@ -36,10 +44,12 @@ public class Result : MonoBehaviour {
     /// </summary>
 	public void ResultAction()
     {
-        ScoreText.text = PlayerStatus.Instance.ItemScorePoint.ToString();
+        ItemPointText.text = PlayerStatus.Instance.ItemScorePoint.ToString();
         DistanceText.text = PlayerStatus.Instance.Distance.ToString();
+        ScoreText.text = PlayerStatus.Instance.Score.ToString();
         ReplayButton.onClick.AddListener(() => Replay());
         TotitleButton.onClick.AddListener(() => Totitle());
+        RankingCreateButton.onClick.AddListener(() => RankingCreate());
     }
 
     public void Replay()
@@ -52,5 +62,10 @@ public class Result : MonoBehaviour {
     {
         SceneController.Instance.ChangeScene("Title");
         PlayerStatus.Instance.Init();
+    }
+
+    public void RankingCreate()
+    {
+        SceneController.Instance.ChangeScene("UserAuth");
     }
 }

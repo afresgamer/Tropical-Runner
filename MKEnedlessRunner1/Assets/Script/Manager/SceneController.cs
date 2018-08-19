@@ -4,7 +4,7 @@ using System.Collections;
 
 public class SceneController: SingletonMonoBehaviour<SceneController>{
     
-    public enum Scenes { Title, Main, Result  }
+    public enum Scenes { Title, Main, Result , UserAuth }
     [HideInInspector]
     public Scenes NowScene;
 

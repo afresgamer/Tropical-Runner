@@ -9,6 +9,7 @@ public class ScoreController : MonoBehaviour {
     Text DistanceText;
     [SerializeField, Header("Pause画面")]
     private GameObject PauseWindow;
+    [Header("Hpのイメージ画像")]
     public GameObject[] HpImageS;
 	
 	// Update is called once per frame
@@ -45,7 +46,7 @@ public class ScoreController : MonoBehaviour {
 
     public void ToTitle()
     {
-        SceneController.Instance.ChangeScene("TestStageCreator");
+        SceneController.Instance.ChangeScene(SceneController.Scenes.Title);
         PlayerStatus.Instance.Init();
     }
 }

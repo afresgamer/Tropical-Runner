@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 
 public class ObstacleBase : MonoBehaviour {
-
-    public float SpinSpeed = 10;
     
-    public virtual void Update()
+    public virtual void Update() { }
+
+    public virtual void OnTriggerEnter(Collider other){ }
+
+    public void Spin(float RotSpeed)
     {
-        transform.Rotate(Vector3.forward, SpinSpeed * Time.deltaTime);
+        transform.Rotate(Vector3.forward, RotSpeed * Time.deltaTime);
     }
 
-    public virtual void OnCollisionEnter(Collision collision){}
 }

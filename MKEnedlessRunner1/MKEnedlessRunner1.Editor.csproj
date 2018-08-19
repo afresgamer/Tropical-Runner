@@ -394,6 +394,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Editor\NCMBMenu.cs" />
+    <Compile Include="Assets\Editor\UpdateXcodeProject.cs" />
     <Compile Include="Assets\Script\Editor\SceneEnumCreator.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -403,6 +405,8 @@
     <None Include="Assets\Demigiant\DOTween\DOTween50.xml" />
     <None Include="Assets\Demigiant\DOTween\Editor\DOTweenEditor.XML" />
     <None Include="Assets\Demigiant\DOTween\readme.txt" />
+    <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\res\values\version.xml" />
     <None Include="Assets\SailCharacterPack\Readme.txt" />
     <None Include="Assets\Shader\WaveShader.shader" />
     <None Include="C:\Users\maki\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Styles\Main_Dark.uss" />

@@ -51,8 +51,17 @@ public class Title : MonoBehaviour {
 
     public void SetRankingWindow()
     {
-        OptionImage.GetComponent<RectTransform>().DOAnchorPosY(500, 1.0f);
-        StartCoroutine(WaitRankingWindow(1.0f));
+        //ログインしているかどうかを確認してログイン状態だったらランキングウィンドウを表示する
+        if (UserAuth.Instance.IsLogIn())
+        {
+            OptionImage.GetComponent<RectTransform>().DOAnchorPosY(500, 1.0f);
+            StartCoroutine(WaitRankingWindow(1.0f));
+        }
+        else
+        {
+            SceneController.Instance.ChangeScene(SceneController.Scenes.UserAuth);
+        }
+        
     }
 
     /// <summary>
@@ -117,4 +126,6 @@ public class Title : MonoBehaviour {
         yield return new WaitForSeconds(waitTime);
         RankingWindow.GetComponent<RectTransform>().DOAnchorPosX(0, 1.0f);
     }
+
+
 }

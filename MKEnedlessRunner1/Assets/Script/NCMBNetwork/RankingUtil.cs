@@ -8,7 +8,7 @@ public class RankingUtil : SingletonMonoBehaviour<RankingUtil> {
     [HideInInspector]
     public List<ScoreRanking> rankingList = new List<ScoreRanking>();
 
-    public void SaveRanking(string userName, int score, GameManager.GameDifficulty gameDifficulty)
+    public void SaveRanking(string userName, int score, string gameDifficulty)
     {
         NCMBObject ncmbObj = new NCMBObject("ScoreRanking");
         ncmbObj["Name"] = userName;
@@ -31,7 +31,7 @@ public class RankingUtil : SingletonMonoBehaviour<RankingUtil> {
         });
     }
 
-    public void FetchRanking(string userName, int score, GameManager.GameDifficulty gameDifficulty)
+    public void FetchRanking(string userName, int score, string gameDifficulty)
     {
         NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("ScoreRanking");
         query.WhereEqualTo("Name", userName);
@@ -64,7 +64,12 @@ public class RankingUtil : SingletonMonoBehaviour<RankingUtil> {
         });
     }
 
-    public void GetScoreRanking(GameManager.GameDifficulty gameDifficulty)
+    public void GetScoreRanking(string userName, string gameDiff)
+    {
+
+    }
+
+    public void GetScoreRankings(string gameDifficulty)
     {
         NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("ScoreRanking");
         query.WhereEqualTo("GameDifficulty", gameDifficulty);
@@ -79,12 +84,17 @@ public class RankingUtil : SingletonMonoBehaviour<RankingUtil> {
             }
             else //成功時
             {
-                foreach(NCMBObject obj in objList)
+                if(objList.Count > 0)
                 {
-                    string n = System.Convert.ToString(obj["Name"]);
-                    int s = System.Convert.ToInt32(obj["Score"]);
-                    rankingList.Add(new ScoreRanking(n, s));
+                    foreach (NCMBObject obj in objList)
+                    {
+                        string n = System.Convert.ToString(obj["Name"]);
+                        int s = System.Convert.ToInt32(obj["Score"]);
+                        rankingList.Add(new ScoreRanking(n, s));
+                    }
                 }
+                else { return; }
+                
             } 
 
         });

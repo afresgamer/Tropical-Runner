@@ -2,8 +2,8 @@
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
-    public enum GameDifficulty { Easy, Normal, Hard }
-    private GameDifficulty NowGameDifficulty;
+    public enum GameDifficulty { Easy = 1, Normal = 2, Hard = 3 }
+    private GameDifficulty NowGameDifficulty = GameDifficulty.Easy;
     public GameDifficulty GetGameDifficulty { get { return NowGameDifficulty; } }
     
     /// <summary>

@@ -12,15 +12,15 @@ public class RecordUpdate : MonoBehaviour {
     //アカウントと記録更新オブジェクト
     [Header("アカウントオブジェクト")]
     public GameObject AccountObj;
-    private GameObject RecordUpdateObj;
+    [Header("記録更新オブジェクト")]
+    public GameObject RecordUpdateObj;
 
     void Start () {
         //すでにログイン状態だったら即座に記録更新UIを表示する
         if (UserAuth.Instance.IsLogIn())
         {
-            SwitchRecordCoroutine();
+            StartCoroutine(SwitchRecordCoroutine());
         }
-        RecordUpdateObj = gameObject;
         scoreText.text = PlayerStatus.Instance.Score.ToString();
         HiScoreText.text = PlayerStatus.Instance.HiScore.ToString();
 	}
@@ -31,14 +31,14 @@ public class RecordUpdate : MonoBehaviour {
     /// <returns></returns>
     public IEnumerator SwitchRecordCoroutine()
     {
-        yield return UserAuth.Instance.IsLogIn();
-        AccountObj.SetActive(false);
-        RecordUpdateObj.SetActive(true);
+        yield return null;
+        SwitchRecordUpdate();
     }
 
     public void SwitchRecordUpdate()
     {
-        StartCoroutine(SwitchRecordCoroutine());
+        AccountObj.SetActive(false);
+        RecordUpdateObj.SetActive(true);
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ public class RecordUpdate : MonoBehaviour {
     /// </summary>
     public IEnumerator SwitchAccountCoroutine()
     {
-        yield return !UserAuth.Instance.IsLogIn();
+        yield return new WaitForSeconds(1.0f);
         AccountObj.SetActive(true);
         RecordUpdateObj.SetActive(false);
     }
@@ -63,7 +63,7 @@ public class RecordUpdate : MonoBehaviour {
     public void UpdateRecord()
     {
         RankingUtil.Instance.FetchRanking(UserAuth.Instance.GetcurrentPlayer(),
-            PlayerStatus.Instance.Score, GameManager.Instance.GetGameDifficulty);
+            PlayerStatus.Instance.Score, GameManager.Instance.GetGameDifficulty.ToString());
         StartCoroutine(UpdateRecordCorotinue());
     }
 
@@ -72,5 +72,18 @@ public class RecordUpdate : MonoBehaviour {
         yield return new WaitForSeconds(2.0f);
         SceneController.Instance.ChangeScene(SceneController.Scenes.Title);
         PlayerStatus.Instance.Init();
+    }
+
+    //タイトルに戻る
+    public void ToTitle()
+    {
+        SceneController.Instance.ChangeScene(SceneController.Scenes.Title);
+        PlayerStatus.Instance.Init();
+    }
+
+    //ログアウト処理
+    public void LogOut()
+    {
+        UserAuth.Instance.LogOut();
     }
 }

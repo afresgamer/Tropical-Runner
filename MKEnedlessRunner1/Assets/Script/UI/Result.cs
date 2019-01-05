@@ -20,6 +20,8 @@ public class Result : MonoBehaviour {
 
     private void Start()
     {
+        //最初にハイスコアを更新します()
+        PlayerStatus.Instance.Score = (PlayerStatus.Instance.ItemScorePoint * 10) + PlayerStatus.Instance.Distance;
         StartCoroutine(ResultAnimation());
         ResultAction();
     }
@@ -54,18 +56,18 @@ public class Result : MonoBehaviour {
 
     public void Replay()
     {
-        SceneController.Instance.ChangeScene("TestStageCreator");
+        SceneController.Instance.ChangeScene(SceneController.Scenes.Main);
         PlayerStatus.Instance.Init();
     }
 
     public void Totitle()
     {
-        SceneController.Instance.ChangeScene("Title");
+        SceneController.Instance.ChangeScene(SceneController.Scenes.Title);
         PlayerStatus.Instance.Init();
     }
 
     public void RankingCreate()
     {
-        SceneController.Instance.ChangeScene("UserAuth");
+        SceneController.Instance.ChangeScene(SceneController.Scenes.UserAuth);
     }
 }

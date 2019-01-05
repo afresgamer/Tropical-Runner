@@ -21,17 +21,18 @@ public class PlayerMovement : MonoBehaviour {
 
     static Dictionary<AnimState, int> animDict = new Dictionary<AnimState, int>()
     {
-        {AnimState.Idle ,Animator.StringToHash("Idle")},
         {AnimState.Run, Animator.StringToHash("Run")},
         {AnimState.Jump, Animator.StringToHash("Jump")}
     };
-
+    Vector3 move = new Vector3();
     Animator anim;
     CharacterController cCtrl;
     //Damage Event 
     Material[] materials;
-    
-	void Start () {
+    bool isAcceleration;
+
+
+    void Start () {
         Camera.main.GetComponent<PlayerCamera>().enabled = true;
         anim = GetComponent<Animator>();
         cCtrl = GetComponent<CharacterController>();
@@ -53,9 +54,9 @@ public class PlayerMovement : MonoBehaviour {
     {
         float h = Input.GetAxis("Horizontal");
         //Acceleration
-        bool isAcceleration = Input.GetKey(KeyCode.U) || Input.GetKey(KeyCode.UpArrow);
+        isAcceleration = Input.GetKey(KeyCode.U) || Input.GetKey(KeyCode.UpArrow);
 
-        Vector3 move = transform.forward * move_speed * 100 * Time.deltaTime + 
+        move = transform.forward * move_speed * 100 * Time.deltaTime + 
             transform.right * h * rot_Speed * 100 * Time.deltaTime;
         if (isAcceleration) { cCtrl.SimpleMove(move * SpeedUpValue); }
         cCtrl.SimpleMove(move);
@@ -66,7 +67,40 @@ public class PlayerMovement : MonoBehaviour {
         anim.SetBool(animDict[AnimState.Jump], !cCtrl.isGrounded);
         anim.SetBool(animDict[AnimState.Run], cCtrl.velocity != Vector3.zero);
     }
+
     
+    /// <summary>
+    /// プレイヤー移動用ボタンイベント
+    /// </summary>
+    public void MoveRight()
+    {
+        if (isMove)
+        {
+            move -= transform.position + transform.right * move_speed;
+            transform.DORotate(new Vector3(0, 45, 0), 0.5f);
+        }
+    }
+
+    public void MoveLeft()
+    {
+        if (isMove)
+        {
+            move += transform.position + transform.right * move_speed;
+            transform.DORotate(new Vector3(0, -45, 0), 0.5f);
+        }
+    }
+
+    public void Jump()
+    {
+        if (isMove && cCtrl.isGrounded) { cCtrl.Move(Vector3.up * JumpPower); }
+    }
+    
+    public void SpeedUpMove()
+    {
+        isAcceleration = true;
+        StartCoroutine(SpeedUpBetween());
+    }
+
     /// <summary>
     /// ダメージ関係処理
     /// </summary>
@@ -77,9 +111,16 @@ public class PlayerMovement : MonoBehaviour {
         if(PlayerStatus.Instance.Hp == 0) { Death(); }
     }
 
+    private IEnumerator SpeedUpBetween()
+    {
+        yield return new WaitForSeconds(1.0f);
+        isAcceleration = false;
+    }
+
     private IEnumerator StartBetween()
     {
-        yield return new WaitForSeconds(0.3f);
+        AnimatorStateInfo animatorStateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        yield return animatorStateInfo.fullPathHash == animDict[AnimState.Run];
         isMove = true;
     }
     
@@ -103,7 +144,7 @@ public class PlayerMovement : MonoBehaviour {
         isMove = false;
         Camera.main.GetComponent<PlayerCamera>().enabled = false;
         Destroy(gameObject);
-        SceneController.Instance.ChangeScene("Result");
+        SceneController.Instance.ChangeScene(SceneController.Scenes.Result);
     }
 
     /// <summary>

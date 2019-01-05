@@ -15,6 +15,7 @@ public class SceneController: SingletonMonoBehaviour<SceneController>{
     public void ChangeScene(Scenes scene)
     {
         SceneManager.LoadScene(scene.ToString());
+        NowScene = scene;
     }
 
     /// <summary>
@@ -24,6 +25,7 @@ public class SceneController: SingletonMonoBehaviour<SceneController>{
     public void ChangeScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+        NowScene = (Scenes)System.Enum.Parse(typeof(Scenes), sceneName);
     }
 
 }

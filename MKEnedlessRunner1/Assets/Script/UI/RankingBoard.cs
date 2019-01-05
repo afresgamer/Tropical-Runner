@@ -7,14 +7,17 @@ public class RankingBoard : MonoBehaviour {
     private Text UserName;
     [SerializeField, Header("ハイスコアテキスト")]
     private Text HiScoreText;
+    [SerializeField, Header("ゲーム難易度テキスト")]
+    private Text GameDiffText;
     [SerializeField, Header("トップ5テキスト")]
     private Text[] RankingTexts;
 
 	void Start () {
         UserName.text = UserAuth.Instance.GetcurrentPlayer();
         HiScoreText.text = PlayerStatus.Instance.HiScore.ToString();
+        GameDiffText.text = GameManager.Instance.GetGameDifficulty.ToString();
         //トップ5の表示するための処理
-        RankingUtil.Instance.GetScoreRanking(GameManager.Instance.GetGameDifficulty);
+        RankingUtil.Instance.GetScoreRankings(GameManager.Instance.GetGameDifficulty.ToString());
 
         if(RankingTexts.Length > RankingUtil.Instance.rankingList.Count)
         {
@@ -29,7 +32,7 @@ public class RankingBoard : MonoBehaviour {
                 RankingTexts[i].text += "   " + "NONE";
             }
         }
-        else if(RankingTexts.Length == RankingUtil.Instance.rankingList.Count)
+        else if(RankingTexts.Length <= RankingUtil.Instance.rankingList.Count)
         {
             for (int i = 0; i < RankingUtil.Instance.rankingList.Count; i++)
             {

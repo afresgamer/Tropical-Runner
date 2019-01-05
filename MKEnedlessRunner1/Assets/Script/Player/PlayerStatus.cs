@@ -10,7 +10,7 @@ public class PlayerStatus : SingletonMonoBehaviour<PlayerStatus> {
     public int ItemScorePoint
     {
         get { return itemScorePoint; }
-        set { if (value > 0) itemScorePoint = value; }
+        set { itemScorePoint = value; }
     }
     // Distance
     [HideInInspector]
@@ -24,7 +24,7 @@ public class PlayerStatus : SingletonMonoBehaviour<PlayerStatus> {
     public int Score
     {
         get { return score; }
-        set { score = (ItemScorePoint * 10) + Distance; }
+        set { score = value; }
     }
     //HiScore
     private int hiscore = 0;

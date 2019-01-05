@@ -20,9 +20,14 @@ public class ScoreController : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Time.timeScale = 0;
-            PauseWindow.SetActive(true);
+            Pause();
         }
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0;
+        PauseWindow.SetActive(true);
     }
 
     /// <summary>

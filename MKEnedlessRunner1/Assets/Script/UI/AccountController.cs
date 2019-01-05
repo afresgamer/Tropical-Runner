@@ -50,14 +50,13 @@ public class AccountController : MonoBehaviour {
     public IEnumerator SwitchTitle()
     {
         //認証出来たらスコア更新
-        yield return UserAuth.Instance.IsLogIn();
+        yield return new WaitForSeconds(1.0f);
         RankingUtil.Instance.SaveRanking(idInputField.text, 
-            PlayerStatus.Instance.Score, GameManager.Instance.GetGameDifficulty);
+            PlayerStatus.Instance.Score, GameManager.Instance.GetGameDifficulty.ToString());
         //スコア更新が終わったらタイトルに戻る
         yield return new WaitForSeconds(2.0f);
         SceneController.Instance.ChangeScene(SceneController.Scenes.Title);
         PlayerStatus.Instance.Init();
-
     }
 
     /// <summary>

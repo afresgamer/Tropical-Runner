@@ -82,6 +82,6 @@ public class UserAuth : SingletonMonoBehaviour<UserAuth> {
     /// <returns></returns>
     public bool IsLogIn()
     {
-        return NCMBUser.CurrentUser.IsAuthenticated();
+        return currentPlayerName != "";
     }
 }

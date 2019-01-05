@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4226230903949566}
   - component: {fileID: 114069556218525484}
+  - component: {fileID: 114495724838318260}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -51,3 +52,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76d208a32ce9b154fa66ebf4705333bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114495724838318260
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1514293990491210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00bc4ad9f4e8ee042ab819bad4054664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BGMVolume: 0.5
+  BGMPitch: 1
+  BGMIsMute: 0
+  BGMIsLoop: 1
+  SEVolume: 0.6
+  SEPitch: 1
+  SEIsMute: 0
+  audioClips:
+  - {fileID: 8300000, guid: 1e1b9daa7d5d2894aafd72aa70d464a8, type: 3}
+  - {fileID: 8300000, guid: c96006f524dcb414b891a9ae8a14e30a, type: 3}
+  - {fileID: 8300000, guid: 9931cbe92e1a3164c8d65ab54f3f902b, type: 3}

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RoadTypes:
   - {fileID: 1475587663292088, guid: 3dee96f9da38e8b49991b686b8c2cd15, type: 2}
-  - {fileID: 1491039208070172, guid: bc4722e8e61d623469fd6561d0a1a9b3, type: 2}
+  - {fileID: 1405954933683022, guid: 0ec5036774c5f344cab399a262ef74db, type: 2}

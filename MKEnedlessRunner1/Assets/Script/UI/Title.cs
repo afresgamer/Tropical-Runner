@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class Title : MonoBehaviour {
 
@@ -14,12 +15,15 @@ public class Title : MonoBehaviour {
     private GameObject SoundSetting;
     [SerializeField, Header("ランキング表示画面")]
     private GameObject RankingWindow;
+    [SerializeField, Header("ログアウトボタン")]
+    private Button LogOutBtn;
 
     private void Start()
     {
         TitleImage.SetActive(true);
         GameModeImage.SetActive(false);
         TitleImage.GetComponent<RectTransform>().DOAnchorPosY(-25, 1.0f);
+        LogOutBtn.interactable = UserAuth.Instance.IsLogIn();
     }
 
     /// <summary>
@@ -57,11 +61,14 @@ public class Title : MonoBehaviour {
             OptionImage.GetComponent<RectTransform>().DOAnchorPosY(500, 1.0f);
             StartCoroutine(WaitRankingWindow(1.0f));
         }
-        else
-        {
-            SceneController.Instance.ChangeScene(SceneController.Scenes.UserAuth);
-        }
-        
+        else { SceneController.Instance.ChangeScene(SceneController.Scenes.UserAuth);}
+    }
+
+    //ログアウト処理
+    public void LogOut()
+    {
+        UserAuth.Instance.LogOut();
+        LogOutBtn.interactable = false;
     }
 
     /// <summary>
@@ -126,6 +133,4 @@ public class Title : MonoBehaviour {
         yield return new WaitForSeconds(waitTime);
         RankingWindow.GetComponent<RectTransform>().DOAnchorPosX(0, 1.0f);
     }
-
-
 }

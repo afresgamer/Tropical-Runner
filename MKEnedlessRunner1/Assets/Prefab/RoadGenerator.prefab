@@ -51,6 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1d533927329fd742a8473e00b706a93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EasyType: {fileID: 11400000, guid: f205c747537ac1443afef317514943a9, type: 2}
+  EasyType: {fileID: 11400000, guid: bcfdd61a9d659e2458ea34ba96f8ad6f, type: 2}
   NormalType: {fileID: 11400000, guid: 4444df97b46fdbf4b923d624e0fe0035, type: 2}
   HardType: {fileID: 11400000, guid: fe2d69d211f035246ada2802661a4e0a, type: 2}

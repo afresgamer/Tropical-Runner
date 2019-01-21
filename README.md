@@ -1,7 +1,9 @@
 # Tropical-Runner
 
 エンドレスランナーゲームです。プラットフォームはPCです。
-制作期間は約3か月です。
+制作期間は約3か月です。  
+下記の画像は実際のプレイ画像です。
+
 ![プレイ動画](https://github.com/afresgamer/Tropical-Runner/blob/master/UnityTropicalRunner.gif)
 
 # 参考資料

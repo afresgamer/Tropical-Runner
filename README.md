@@ -2,6 +2,7 @@
 
 エンドレスランナーゲームです。プラットフォームはPCです。
 制作期間は約3か月です。
+![プレイ動画](https://github.com/afresgamer/Tropical-Runner/blob/master/UnityTropicalRunner.gif)
 
 # 参考資料
 ## DOTWEENに関連する参考サイト
